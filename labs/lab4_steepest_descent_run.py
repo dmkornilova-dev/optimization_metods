@@ -1,4 +1,5 @@
 from math import sqrt
+from helping.print_tables import print_table_multivar
 from helping.var9 import f2 as f, grad_f2 as grad, X0, X_MIN, A, B, C, D, E, F
 from methods.lab3.fibonacci import fibonacci_method
 from methods.lab3.golden_section import golden_section_method
@@ -15,19 +16,6 @@ STEP_METHODS = {
     "Фибоначчи": dict(func=fibonacci_method, l=0.0001, eps=0.00001),
 }
 
-def print_descent_table(history):
-    header = (f"{'k':>2} | {'x^k':^22} | {'f(x^k)':>9} | {'||grad||':>9} | {'t_k':>8} | "
-              f"{'x^(k+1)':^22} | {'||norm_x||':>8} | {'|mod_fx|':>8} | {'Условия':^7}")
-    print(header)
-    for row in history:
-        xk = f"({row['x_k'][0]:.4f}; {row['x_k'][1]:.4f})"
-        xk1 = f"({row['x_k1'][0]:.4f}; {row['x_k1'][1]:.4f})"
-        ok = "да" if row["ok"] else "нет"
-        print(f"{row['k']:>2} | {xk:^22} | {row['f_xk']:>9.4f} | {row['grad_norm']:>9.4f} | "
-              f"{row['t_k']:>8.4f} | {xk1:^22} | {row['norm_x']:>8.4f} | {row['mod_fx']:>8.4f} | "
-              f"{ok:^7}")
-
-
 def run_method(name):
     params = {k: v for k, v in STEP_METHODS[name].items() if k != "func"}
     print(f"Наискорейший спуск: f(x) = {A}*x1^2 + {B}*x2^2 + {C}*x1*x2 + {D}*x1 + {E}*x2 + {F}; x0 = {X0}; "
@@ -37,7 +25,7 @@ def run_method(name):
                                   step_method=STEP_METHODS[name],
                                   svenn_t=SVENN_T, verbose=VERBOSE)
 
-    print_descent_table(res.history)
+    print_table_multivar(res.history)
     print(f"Найденная точка: x* = ({res.x[0]:.6f}; {res.x[1]:.6f}), f(x*) = {res.f_x:.6f}")
     if res.extra["reason"] == "step4":
         print("Причина остановки: выполнен критерий ||grad f|| < eps1 (шаг 4)")

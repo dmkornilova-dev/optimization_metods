@@ -10,25 +10,17 @@ def print_summary_table(history):
               f"{row['z_k']:>8.4f} | {row['f_zk']:>8.4f} | {row['case']:^6} | "
               f"{new_interval:^20} | {row['delta']:>7.4f}")
 
-def print_descent_table(history):
-    headers = ["k", "x^k", "f(x^k)", "||grad||", "t_k", "x^(k+1)", "||norm_x||", "|mod_fx|", "Условия"]
-    rows = []
+def print_table_multivar(history):
+    # общая таблица для методов спуска; столбец d^k заполняется только в методе Ньютона
+    # (в истории метода наискорейшего спуска ключа "direction" нет - столбец остаётся пустым)
+    header = (f"{'k':>2} | {'x^k':^22} | {'f(x^k)':>9} | {'||grad||':>9} | {'d^k':^8} | {'t_k':>8} | "
+              f"{'x^(k+1)':^22} | {'||norm_x||':>8} | {'|mod_fx|':>8} | {'Условия':^7}")
+    print(header)
     for row in history:
-        rows.append([
-            str(row["k"]),
-            f"({row['x_k'][0]:8.4f}; {row['x_k'][1]:8.4f})",
-            f"{row['f_xk']:.4f}",
-            f"{row['grad_norm']:.4f}",
-            f"{row['t_k']:.4f}",
-            f"({row['x_k1'][0]:8.4f}; {row['x_k1'][1]:8.4f})",
-            f"{row['norm_x']:.4f}",
-            f"{row['mod_fx']:.4f}",
-            "да" if row["ok"] else "нет",
-        ])
-    # ширина каждого столбца = самая длинная строка в нём (заголовок или значение)
-    widths = [max([len(h)] + [len(r[i]) for r in rows]) for i, h in enumerate(headers)]
-    print(" | ".join(h.center(w) for h, w in zip(headers, widths)))
-    for r in rows:
-        # числа и координаты - по правому краю, "да/нет" - по центру
-        print(" | ".join(c.center(w) if i == len(r) - 1 else c.rjust(w)
-                         for i, (c, w) in enumerate(zip(r, widths))))
+        xk = f"({row['x_k'][0]:.4f}; {row['x_k'][1]:.4f})"
+        xk1 = f"({row['x_k1'][0]:.4f}; {row['x_k1'][1]:.4f})"
+        ok = "да" if row["ok"] else "нет"
+        direction = row.get("direction", "")
+        print(f"{row['k']:>2} | {xk:^22} | {row['f_xk']:>9.4f} | {row['grad_norm']:>9.4f} | "
+              f"{direction:^8} | {row['t_k']:>8.4f} | {xk1:^22} | {row['norm_x']:>8.4f} | "
+              f"{row['mod_fx']:>8.4f} | {ok:^7}")
