@@ -19,7 +19,7 @@ class NotUnimodalError(ValueError):
     pass
 
 @dataclass
-class DescentResult:
+class MultivarResult:
     x: list #найденная точка x*
     f_x: float #значение функции в x*
     n_iter: int #количество выполненных итераций
