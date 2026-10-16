@@ -1,6 +1,6 @@
 from math import sqrt
 from helping.log import make_logger
-from helping.types import DescentResult
+from helping.types import MultivarResult
 from helping.line_search import line_search
 
 
@@ -54,7 +54,7 @@ def steepest_descent_method(f, grad, x0, eps1, eps2, M, step_method, svenn_t, ve
             break
         log(f"\nШаг 5. k = {k} < M = {M} - переходим к шагу 6.")
 
-        # шаг 6: phi(t) = f(x_k - t * grad f(x_k)) -> min
+        # шаг 6 - phi(t) = f(x_k - t * grad f(x_k)) -> min
         def phi(t, x=x, g=g):
             return f(*[xi - t * gi for xi, gi in zip(x, g)])  # phi(tk) = f(xk-tk*grad(xk)) - ищем точку минимума phi
         t, n_line = line_search(phi, step_method, svenn_t, verbose=verbose)
@@ -104,7 +104,7 @@ def steepest_descent_method(f, grad, x0, eps1, eps2, M, step_method, svenn_t, ve
 
     log(f"\nx* = {x}, f(x*) = {fx:.6f}")
 
-    return DescentResult(
+    return MultivarResult(
         x=x, f_x=fx,
         n_iter=len(history),
         n_evals=n_evals,
