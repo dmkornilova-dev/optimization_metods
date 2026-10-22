@@ -7,8 +7,7 @@ from methods.lab3.dichotomy import dichotomy_method
 from methods.lab4.newton_raphson import newton_raphson_method
 
 # параметры запуска
-# EPS1, EPS2, M = 0.10, 0.15, 10
-EPS1, EPS2, M = 0.01, 0.01, 1000
+EPS1, EPS2, M = 0.10, 0.15, 10
 SVENN_T = 0.1  # шаг метода Свенна
 VERBOSE = False
 STEP_METHODS = {
