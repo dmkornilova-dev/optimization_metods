@@ -6,7 +6,7 @@ from methods.lab3.golden_section import golden_section_method
 from methods.lab3.dichotomy import dichotomy_method
 from methods.lab4.newton import newton_method
 
-# параметры запуска (должны совпадать с теми, что выбраны в ручном решении)
+# параметры запуска
 EPS1, EPS2, M = 0.10, 0.15, 5
 SVENN_T = 0.1  # шаг метода Свенна (нужен только на шаге 10б, если H^-1 не положительно определена)
 VERBOSE = True
