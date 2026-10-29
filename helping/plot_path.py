@@ -10,13 +10,6 @@ def get_path(res):
 
 def plot_path(f, res, title="Путь метода", x_min=None, label_points=True,
               save_path=None, show=True):
-    """Рисует на плоскости линии уровня f(x1, x2) и все точки x^0, x^1, ... из res.history.
-
-    f          - функция двух переменных f(x1, x2) (должна работать с numpy-массивами)
-    res        - MultivarResult любого из методов лабораторной 4
-    x_min      - аналитический минимум (необязательно), рисуется звездой
-    save_path  - путь для сохранения картинки (необязательно)
-    """
     import matplotlib.pyplot as plt
 
     path = np.array(get_path(res), dtype=float)
